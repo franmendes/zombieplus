@@ -1,0 +1,11 @@
+{
+  "name": "zombieplus",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.8"
+  },
+  "scripts": {}
+}
