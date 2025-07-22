@@ -2,6 +2,7 @@
 import { test } from "@playwright/test";
 import { LandingPage } from "../pages/landingPage";
 import { Toast } from "../pages/Components";
+import { faker } from "@faker-js/faker";
 
 let landingPage;
 let toast;
@@ -12,8 +13,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("deve cadastrar um lead na fila de espera", async ({ page }) => {
+  const name = faker.person.fullName();
+  const email = faker.internet.email();
+  
   await landingPage.openLeadModal();
-  await landingPage.submitLeadForm("João da Silva", "joao@silva.com");
+  await landingPage.submitLeadForm(name, email);
 
   const message =
     "Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!";
