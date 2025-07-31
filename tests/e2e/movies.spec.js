@@ -3,6 +3,8 @@ import { LoginPage } from "../pages/LoginPage";
 import { Toast } from "../pages/Components";
 import { MoviesPage } from "../pages/MoviesPage";
 
+const data = require("../support/fixtures/movies.json");
+
 let loginPage;
 let toast;
 let moviesPage;
@@ -18,5 +20,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("deve poder cadastrar um novo filme", async ({ page }) => {
-  await moviesPage.create("O Último Filme", "sinopse", "Netflix", "1980");
+  const movie = data.create;
+  await moviesPage.create(
+    movie.title,
+    movie.overview,
+    movie.company,
+    movie.release_year
+  );
+
+  const message = "UhullCadastro realizado com sucesso!";
+
+  await toast.haveText(message);
 });
