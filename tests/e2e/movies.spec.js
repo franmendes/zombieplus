@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { Toast } from "../pages/Components";
 import { MoviesPage } from "../pages/MoviesPage";
+import { executeSQL } from "../support/database";
 
 const data = require("../support/fixtures/movies.json");
 
@@ -21,6 +22,9 @@ test.beforeEach(async ({ page }) => {
 
 test("deve poder cadastrar um novo filme", async ({ page }) => {
   const movie = data.create;
+
+  await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}'`);
+
   await moviesPage.create(
     movie.title,
     movie.overview,
@@ -28,7 +32,5 @@ test("deve poder cadastrar um novo filme", async ({ page }) => {
     movie.release_year
   );
 
-  const message = "UhullCadastro realizado com sucesso!";
-
-  await toast.haveText(message);
+  await toast.containText("Cadastro realizado com sucesso!");
 });
