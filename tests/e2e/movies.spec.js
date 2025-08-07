@@ -1,23 +1,23 @@
 import { expect, test } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
-import { Toast } from "../pages/Components";
-import { MoviesPage } from "../pages/MoviesPage";
+import { Login } from "../actions/Login";
+import { Toast } from "../actions/Components";
+import { Movies } from "../actions/Movies";
 import { executeSQL } from "../support/database";
 
 const data = require("../support/fixtures/movies.json");
 
-let loginPage;
+let login;
 let toast;
-let moviesPage;
+let movies;
 
 test.beforeEach(async ({ page }) => {
-  loginPage = new LoginPage(page);
+  login = new Login(page);
   toast = new Toast(page);
-  moviesPage = new MoviesPage(page);
+  movies = new Movies(page);
 
-  await loginPage.visit();
-  await loginPage.submit("admin@zombieplus.com", "pwd123");
-  await moviesPage.isLoggedIn();
+  await login.visit();
+  await login.submit("admin@zombieplus.com", "pwd123");
+  await login.isLoggedIn();
 });
 
 test("deve poder cadastrar um novo filme", async ({ page }) => {
@@ -25,7 +25,7 @@ test("deve poder cadastrar um novo filme", async ({ page }) => {
 
   await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}'`);
 
-  await moviesPage.create(
+  await movies.create(
     movie.title,
     movie.overview,
     movie.company,
@@ -33,4 +33,18 @@ test("deve poder cadastrar um novo filme", async ({ page }) => {
   );
 
   await toast.containText("Cadastro realizado com sucesso!");
+});
+
+test("não deve cadastrar os campos obrigatórios não são preenchidos", async ({
+  page,
+}) => {
+  await movies.goForm();
+  await movies.submit();
+
+  await movies.alertHaveText([
+    "Por favor, informe o título.",
+    "Por favor, informe a sinopse.",
+    "Por favor, informe a empresa distribuidora.",
+    "Por favor, informe o ano de lançamento.",
+  ]);
 });

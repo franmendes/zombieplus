@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-export class LoginPage {
+export class Login {
   constructor(page) {
     this.page = page;
   }
@@ -9,6 +9,11 @@ export class LoginPage {
     await this.page.goto("http://localhost:3000/admin/login");
     const loginForm = this.page.locator(".login-form");
     await expect(loginForm).toBeVisible();
+  }
+
+  async isLoggedIn() {
+    const loggedUser = this.page.locator(".logged-user");
+    await expect(loggedUser).toHaveText('Olá, Admin');
   }
 
   async submit(email, password) {
