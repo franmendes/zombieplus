@@ -1,7 +1,7 @@
 // @ts-check
 import { expect, test } from "@playwright/test";
-import { Leads } from "../actions/Leads";
-import { Toast } from "../actions/Components";
+import { Leads } from "../support/actions/Leads";
+import { Toast } from "../support/actions/Components";
 import { faker } from "@faker-js/faker";
 
 let leads;

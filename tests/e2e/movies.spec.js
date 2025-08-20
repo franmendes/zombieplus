@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { Login } from "../actions/Login";
-import { Toast } from "../actions/Components";
-import { Movies } from "../actions/Movies";
+import { Login } from "../support/actions/Login";
+import { Toast } from "../support/actions/Components";
+import { Movies } from "../support/actions/Movies";
 import { executeSQL } from "../support/database";
 
 const data = require("../support/fixtures/movies.json");
@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 
   await login.visit();
   await login.submit("admin@zombieplus.com", "pwd123");
-  await login.isLoggedIn();
+  await login.isLoggedIn("Admin");
 });
 
 test("deve poder cadastrar um novo filme", async ({ page }) => {

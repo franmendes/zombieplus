@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { Login } from "../actions/Login";
-import { Toast } from "../actions/Components";
-import { Movies } from "../actions/Movies";
+import { Login } from "../support/actions/Login";
+import { Toast } from "../support/actions/Components";
+import { Movies } from "../support/actions/Movies";
 
 let login;
 let toast;
@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 
 test("deve logar como administrador", async ({ page }) => {
   await login.submit("admin@zombieplus.com", "pwd123");
-  await login.isLoggedIn();
+  await login.isLoggedIn("Admin");
 });
 
 test("não deve logar com senha incorreta", async ({ page }) => {

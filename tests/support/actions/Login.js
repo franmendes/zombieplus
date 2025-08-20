@@ -11,9 +11,9 @@ export class Login {
     await expect(loginForm).toBeVisible();
   }
 
-  async isLoggedIn() {
+  async isLoggedIn(username) {
     const loggedUser = this.page.locator(".logged-user");
-    await expect(loggedUser).toHaveText('Olá, Admin');
+    await expect(loggedUser).toHaveText(`Olá, ${username}`);
   }
 
   async submit(email, password) {
