@@ -29,7 +29,9 @@ test("deve poder cadastrar um novo filme", async ({ page }) => {
     movie.title,
     movie.overview,
     movie.company,
-    movie.release_year
+    movie.release_year,
+    movie.cover,
+    movie.featured
   );
 
   await toast.containText("Cadastro realizado com sucesso!");
